@@ -212,61 +212,61 @@ teams = [
     "name": "SSG 랜더스",
     "description": "혁신적이고 과학적인 야구를 추구하는 인천의 자부심",
     "characteristics": "데이터 기반의 전략적 경기 운영, 젊은 선수 육성",
-    "image": "https://images.unsplash.com/photo-1562077772-3bd90403f7f0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    "image": "../jpg/st_team_ssg.jpg"
   },
   {
     "name": "키움 히어로즈",
     "description": "젊고 역동적인 에너지가 넘치는 서울의 새로운 강자",
     "characteristics": "공격적인 야구, 신생팀의 패기",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    "image": "../jpg/st_team_kiwoom.jpg"
   },
   {
     "name": "LG 트윈스",
     "description": "전통과 실력을 겸비한 서울의 자존심",
     "characteristics": "안정적인 팀 운영, 탄탄한 기본기",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    "image": "../jpg/st_team_lg.jpg"
   },
   {
     "name": "KT 위즈",
     "description": "빠르게 성장하는 수원의 젊은 팀",
     "characteristics": "스마트한 경기 운영, 체계적인 선수 육성",
-    "image": "https://images.unsplash.com/photo-1471295253337-3ceaaad65897?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    "image": "../jpg/st_team_kt.jpg"
   },
   {
     "name": "NC 다이노스",
     "description": "창의적이고 혁신적인 창원의 공룡군단",
     "characteristics": "데이터 기반 야구, 장기적 비전",
-    "image": "https://images.unsplash.com/photo-1508163223045-1880bc36e222?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    "image": "../jpg/st_team_nc.jpg"
   },
   {
     "name": "두산 베어스",
     "description": "강한 전통과 저력을 가진 서울의 명문",
     "characteristics": "안정적인 선수층, 탄탄한 프런트",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    "image": "../jpg/doosan.jpeg"
   },
   {
     "name": "KIA 타이거즈",
     "description": "열정적인 팬덤을 가진 광주의 호랑이군단",
     "characteristics": "뜨거운 응원 문화, 지역 밀착형 운영",
-    "image": "https://images.unsplash.com/photo-1562077772-3bd90403f7f0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    "image": "../jpg/kia.jpg"
   },
   {
     "name": "삼성 라이온즈",
     "description": "왕조의 자존심을 가진 대구의 사자군단",
     "characteristics": "체계적인 선수 육성, 강한 승부 근성",
-    "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    "image": "../jpg/samsung.jpg"
   },
   {
     "name": "롯데 자이언츠",
     "description": "뜨거운 야구 도시 부산의 자부심",
     "characteristics": "열정적인 팬 문화, 화끈한 공격 야구",
-    "image": "https://images.unsplash.com/photo-1508163223045-1880bc36e222?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    "image": "../jpg/lotte.jpg"
   },
   {
     "name": "한화 이글스",
     "description": "불굴의 의지를 가진 대전의 독수리군단",
     "characteristics": "끈기 있는 재건, 젊은 선수 육성",
-    "image": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    "image": "../jpg/hanwha.png"
   }
 ]
 
@@ -286,28 +286,23 @@ st.markdown("""
         text-align: center;
         margin: 20px 0;
     }
-    .choice-container {
+    .choice-btn {
         width: 80%;
         max-width: 500px;
     }
-    .choice-btn {
-        width: 100%;
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 10px;
-        border: 2px solid #e0e0e0;
-        background-color: white;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s;
-        font-size: 16px;
-    }
     .choice-btn:hover {
-        background-color: #f5f5f5;
-        border-color: #72D180;
+        background-color: #f5f5f5; /* hover 시 배경색 */
+        border-color: #72D180; /* hover 시 테두리 색 */
     }
-    .stProgress > div > div > div {
-        background-color: #72D180; /* 프로그레스바 색상 변경 */
+    .choice-btn:active {
+        background-color: #A5D6A7; /* 클릭 시 배경색 */
+        border-color: #388E3C; /* 클릭 시 테두리 색 */
+    }
+    .stProgress {
+        background-color: white; /* 프로그레스바 배경색 */
+    }
+    .stProgress > div > div  {
+        background-color: #72D180; /* 프로그레스바 진행 색상 */
     }
     .progress-text {
         text-align: center;
@@ -315,7 +310,9 @@ st.markdown("""
         margin-bottom: 10px;
     }
     </style>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+
+
 
 # 시작 화면
 if 'current_question' not in st.session_state:
@@ -368,7 +365,7 @@ def render_question():
     st.markdown(f'<div class="question-text">{current_q["question"]}</div>', unsafe_allow_html=True)
     
     # 선택지 컨테이너
-    st.markdown('<div class="choice-container">', unsafe_allow_html=True)
+    st.markdown('<div class="choice-btn">', unsafe_allow_html=True)
     
     # 선택지 버튼
     for choice in current_q["choices"]:
@@ -405,12 +402,7 @@ else:
         
         st.markdown("""
         <style>
-        .stImage img {
-            display: block; /* 이미지 블록 요소로 설정 */
-            margin-left: auto; /* 왼쪽 여백 자동 */
-            margin-right: auto; /* 오른쪽 여백 자동 */
-            width: 50%; /* 이미지 크기를 반으로 줄임 */
-        }
+        
         .result-container {
             display: flex;
             flex-direction: column;
@@ -446,13 +438,12 @@ else:
         for team_name in best_teams:
             team_info = next((team for team in teams if team["name"] == team_name), None)
             if team_info:
-                st.image(team_info["image"], use_column_width=True)
+                st.image(team_info["image"], width=200)
                 st.markdown(f'<div class="team-name">{team_info["name"]}</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="team-description">{team_info["description"]}</div>', unsafe_allow_html=True)
                 # Save the best team(s) to a file for use in another script
                 with open("best_team.json", "w", encoding="utf-8") as f:
                     json.dump({"best_teams": best_teams}, f, ensure_ascii=False, indent=4)
-                st.write(f"Best Teams: {best_teams}")
         st.markdown('</div>', unsafe_allow_html=True)
        
 

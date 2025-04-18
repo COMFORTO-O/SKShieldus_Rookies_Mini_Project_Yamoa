@@ -111,7 +111,9 @@ def save_to_json(data, filename="scrap_teamrank.json"):
     :param filename: 생성할 JSON 파일 이름 (기본값: "scrap_teamrank.json")
     """
     try:
-        with open(filename, "w", encoding="utf-8") as json_file:
+        save_folder = "../../csv"  # 현재 폴더 기준: jupyter/scraping → project/csv
+        file_path = os.path.join(save_folder, filename)
+        with open(file_path, "w", encoding="utf-8") as json_file:
             json.dump(data, json_file, indent=4, ensure_ascii=False)  # JSON 파일 생성
         print(f"\n데이터가 JSON 파일 '{filename}'로 저장되었습니다.")
     except Exception as e:

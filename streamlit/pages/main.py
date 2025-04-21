@@ -15,7 +15,7 @@ from plt_teamrank import visualize_rank_trends
 from plt_player_record import plt_player_record
 
 
-# Streamlit 설정을 가장 먼저 호출 - 그렇지 않으면 오류 발생생
+# Streamlit 설정을 가장 먼저 호출 - 그렇지 않으면 오류 발생
 st.set_page_config(page_title="야모아", layout="wide")
 
 # 네비게이션 바

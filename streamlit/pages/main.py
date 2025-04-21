@@ -10,7 +10,7 @@ sys.path.append("../components")
 
 from navbar import show
 from plt_team_rank import visualize_team_win_rate
-from plt_teamrank import visualize_rank_trends
+# from plt_teamrank import visualize_rank_trends
 from plt_player_record import plt_player_record
 
 
@@ -77,14 +77,14 @@ with st.container():
 #     </div>
 # """, unsafe_allow_html=True)
 # # ------------ 팀별 순위 변화 시각화 ------------
-# with st.container():
-#     # JSON 데이터를 로드하여 DataFrame 생성
-#     df = load_data_from_json(json_file_path)  # 여기서 캐시된 데이터 사용
-    
-#     with st.container():
-#         fig_rank = visualize_rank_trends(df)  # 팀별 순위 변화 시각화 함수 호출 (df를 전달)
-#         st.pyplot(fig_rank)
+# # JSON 파일 불러오기 → DataFrame 변환
+# with open("csv/scrap_teamrank.json", encoding="utf-8") as f:
+#     json_data = json.load(f)
+# df = load_data_from_json(json_data)
 
+# # 시각화 → Streamlit에 출력
+# fig = visualize_rank_trends(df)
+# st.pyplot(fig)
 
 
 

@@ -6,6 +6,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 import time
+import os
+
+base_path = os.path.dirname(__file__)
+csv_path1 = os.path.join(base_path, '..', 'csv', 'scrap_batter_record.csv')
+csv_path2 = os.path.join(base_path, '..', 'csv', 'scrap_bowler_record.csv')
 
 def scrap_player_record():
 
@@ -71,9 +76,9 @@ def scrap_player_record():
         df = df[df['순위'] != '합계']
 
         if position == "타자 데이터":
-            df.to_csv('./csv/scrap_batter_record.csv', index=False, encoding='utf-8-sig')
+            df.to_csv(csv_path1, index=False, encoding='utf-8-sig')
         else:
-            df.to_csv('./csv/scrap_bowler_record.csv', index=False, encoding='utf-8-sig')
+            df.to_csv(csv_path2, index=False, encoding='utf-8-sig')
 
         # 브라우저 종료
         driver.quit()

@@ -3,6 +3,12 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import numpy as np
+import sys, os
+
+base_path = os.path.dirname(__file__)
+csv_path = os.path.join(base_path, '..', 'csv', 'scrap_team_rank.csv')
+
+
 
 def visualize_team_win_rate():
     font_path = 'C:\\windows\\Fonts\\malgun.ttf'
@@ -11,7 +17,7 @@ def visualize_team_win_rate():
     # rc(run command)
     matplotlib.rc('font', family=font_prop)
     
-    df_team = pd.read_csv('C:/Users/user/Desktop/yamoa_project/csv/scrap_team_rank.csv')
+    df_team = pd.read_csv(csv_path)
 
     # 승률 기준으로 오름차순 정렬
     df_team = df_team.sort_values(by='승률', ascending=True)

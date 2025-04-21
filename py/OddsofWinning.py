@@ -1,6 +1,6 @@
 
-def predict_winrate(home_team, away_team):
-    
+def predict_winrate(home_team_name, away_team_name):
+
     import pandas as pd
     import numpy as np
     from sklearn.ensemble import RandomForestRegressor
@@ -92,7 +92,7 @@ def predict_winrate(home_team, away_team):
         fig = plt.figure(figsize=(14, 5))
 
         # 제목
-        plt.text(0.5, 0.95, f"{home_team} vs {away_team} 승부예측", ha='center', va='center', fontsize=17, color='black', weight='bold', transform=fig.transFigure)
+        plt.text(0.5, 0.95, f"{home_team_name} vs {away_team_name} 승부예측", ha='center', va='center', fontsize=17, color='black', weight='bold', transform=fig.transFigure)
 
         # 왼쪽 이미지
         ax_img_home = fig.add_axes([0.05, 0.25, 0.2, 0.5])
@@ -103,10 +103,6 @@ def predict_winrate(home_team, away_team):
         ax_img_away = fig.add_axes([0.75, 0.25, 0.2, 0.5])
         ax_img_away.imshow(away_img)
         ax_img_away.axis('off')
-
-        # 중앙 그래프
-        ax_bar = fig.add_axes([0.3, 0.4, 0.4, 0.2])
-
 
         # 팀별 색상 딕셔너리
         team_colors = {
@@ -126,6 +122,9 @@ def predict_winrate(home_team, away_team):
         home_color = team_colors.get(home_team, '#1f77b4')  # 기본값: 진한 파랑
         away_color = team_colors.get(away_team, '#00cfff')  # 기본값: 밝은 하늘색
 
+        # 중앙 그래프
+        ax_bar = fig.add_axes([0.3, 0.4, 0.4, 0.2])
+        ax_bar.set_facecolor('none')  # 배경 투명하게
         ax_bar.barh(0, home_winrate, color=home_color, height=0.6)
         ax_bar.barh(0, away_winrate, left=home_winrate, color=away_color, height=0.6)
 
@@ -133,22 +132,22 @@ def predict_winrate(home_team, away_team):
         ax_bar.text(home_winrate / 2, 0, f"{home_winrate:.1f}%", va='center', ha='center', color='white', fontsize=14, weight='bold')
         ax_bar.text(home_winrate + away_winrate / 2, 0, f"{away_winrate:.1f}%", va='center', ha='center', color='white', fontsize=14, weight='bold')    
 
-        # 축과 눈금 완전 제거
-        ax_bar.axis('off')
+        # 모든 축과 눈금 제거
         ax_bar.set_xticks([])
         ax_bar.set_yticks([])
+        ax_bar.set_xticklabels([])
+        ax_bar.set_yticklabels([])
         for spine in ax_bar.spines.values():
             spine.set_visible(False)
 
-        ax_bar.set_xlim(0, 100)
+        ax_bar.tick_params(axis='both', which='both', length=0)  # 눈금 길이 0으로 설정
+        ax_bar.axis('off')  # 이 코드는 모든 축을 숨깁니다
 
         # 특정 팀에 대한 그래프만 표시
-        if home_team == '두산' and away_team == 'KIA':
+        if home_team == home_team_name and away_team == away_team_name:
             plt.show()
         else:
             plt.close(fig)
-
-        # plt.show()
 
 
 predict_winrate('두산', 'KIA')

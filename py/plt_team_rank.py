@@ -34,7 +34,7 @@ def visualize_team_win_rate():
     # 값 표시
     for i, rate in enumerate(df_team['승률']):
         total = df_team.loc[i, ['승률', '무승부율', '패배율']].sum()
-        ax.text(total - 0.05, i, f'{rate:.3f}%', ha='center', fontsize=10, color='black')
+        ax.text(total - 0.53, i, f'{rate:.3f}%', ha='center', fontsize=10, color='black')
 
     # plot 특징 수정
     ax.legend(loc='upper right')

@@ -12,12 +12,16 @@ font_prop = fm.FontProperties(fname=font_path).get_name()
 matplotlib.rc('font', family=font_prop)
 
 # JSON 파일 경로
-json_file_path = "C:/Users/user/Desktop/yamoa_project/csv/scrap_teamrank.json"
+# json_file_path = "C:/Users/user/Desktop/yamoa_project/csv/scrap_teamrank.json"
 
 
 # JSON 데이터 로드
 with open(json_file_path, 'r', encoding='utf-8') as json_file:
     json_data = json.load(json_file)
+
+
+
+
 
 # JSON 데이터를 Pandas DataFrame으로 변환
 def load_data_from_json(json_data):

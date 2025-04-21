@@ -14,6 +14,7 @@ from navbar import show
 from plt_OddsofWinning import plt_OddsofWinning
 from ml_winrate import RF_winrate
 from dataset_matchup import dataset_matchup
+from scrap_match_up import scrap_match_up
 # 네브바 보이기
 show()
 
@@ -51,10 +52,9 @@ st.markdown("""
 
 # ------------ 예측 및 데이터 로딩 ------------
 
+# scrap_match_up() # 오늘의 경기 정보 스크래핑, home away 순서 조정정
 dataset_matchup()  # 경기 정보 데이터셋 생성
-# 먼저 예측 수행 → csv 파일 생성
-RF_winrate()
-
+RF_winrate() # 머신러닝 예측 수행 → csv 파일 생성
 # 경기 정보 파일 로드
 matches = pd.read_csv(f"../../csv/scrap_match_up_main.csv", encoding='utf-8-sig')
 
@@ -71,7 +71,6 @@ for i, row in matches.iterrows():
     with col:
         match_label = f"{row['팀명1']}  vs  {row['팀명2']}\n📍 {row['야구장']}\n 🕒 {row['경기시간']}"
 
-
         if st.button(match_label, key=f"match_{i}", use_container_width=True):
             selected_match = (row['팀명1'], row['팀명2'])
             
@@ -79,19 +78,10 @@ for i, row in matches.iterrows():
 # # ------------ 시각화 결과 출력 ------------
 
 
-
-
-# 버튼 클릭으로 선택된 경기 정보 가져오기
-if selected_match:
-    home_team, away_team = selected_match
-
 if selected_match:
     home_team, away_team = selected_match
     st.markdown(f"### 🎯 {home_team} vs {away_team} 승부 예측 결과")
 
-#     img_path = plt_OddsofWinning(home_team, away_team)  # 예상 이미지 경로 반환 함수
     with st.container():
-        fig = plt_OddsofWinning(home_team, away_team)  # 팀별 승수 시각화 함수 호출
+        fig = plt_OddsofWinning(home_team, away_team)
         st.pyplot(fig)
-
-    # st.image(Image.open(img_path), caption=f"{home_team} vs {away_team} 승부 예측", use_column_width=True)

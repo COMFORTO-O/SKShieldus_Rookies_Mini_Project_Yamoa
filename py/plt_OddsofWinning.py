@@ -1,16 +1,14 @@
 
+import pandas as pd
+import os
+import matplotlib
+import matplotlib.pyplot as plt
+from PIL import Image
+import matplotlib.font_manager as fm
+import pandas as pd
+
+
 def plt_OddsofWinning(home_team_name, away_team_name):
-
-    import pandas as pd
-    import os
-    import glob
-    import matplotlib
-    import matplotlib.pyplot as plt
-    from PIL import Image
-    import matplotlib.font_manager as fm
-    import pandas as pd
-
-
 
     # 한글 폰트 설정
     font_path = 'C:\\windows\\Fonts\\malgun.ttf'
@@ -23,11 +21,10 @@ def plt_OddsofWinning(home_team_name, away_team_name):
 
     odds_df = pd.read_csv(csv_path)
 
-    for index, row in odds_df.iterrows():
+    for _, row in odds_df.iterrows():
+
         home_team = row['home_team']
         away_team = row['away_team']
-        home_pitcher = row['home_pitcher']
-        away_pitcher = row['away_pitcher']
         home_winrate = row['home_winrate'] * 100
         away_winrate = row['away_winrate'] * 100
 
@@ -102,7 +99,6 @@ def plt_OddsofWinning(home_team_name, away_team_name):
 
         # 특정 팀에 대한 그래프만 표시
         if home_team == home_team_name and away_team == away_team_name:
-            plt.show()
             return fig  # fig 객체 반환
         else:
             plt.close(fig)

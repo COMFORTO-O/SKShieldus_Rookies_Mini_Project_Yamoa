@@ -4,12 +4,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import pandas as pd
+import os
 
 def scrap_match_up():
 
     # Selenium 드라이버 실행
     driver = webdriver.Chrome()
     driver.get("https://www.koreabaseball.com/Schedule/GameCenter/Main.aspx#none;")
+
+    base_path = os.path.dirname(__file__)
+    csv_path = os.path.join(base_path, '..', 'csv')
 
     # 페이지 로드 대기
     WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "section")))
@@ -178,6 +182,7 @@ def scrap_match_up():
             # 야구장별 홈팀 추론용 매핑
             stadium_home_team_map = {
                 "잠실": "두산",
+                "잠실": "LG",
                 "문학": "SSG",
                 "대구": "삼성",
                 "고척": "키움",
@@ -187,7 +192,8 @@ def scrap_match_up():
                 "광주": "KIA",
                 "부산": "롯데",
                 "청주": "한화",
-                "울산": "롯데"
+                "울산": "롯데",
+                "사직" : "롯데"
             }
 
             # 결과 저장 1
@@ -272,10 +278,10 @@ def scrap_match_up():
     # 드라이버 종료
     driver.quit()
 
-    df_1.to_csv('../csv/scrap_match_up_main.csv', index=False, encoding='utf-8-sig')
-    df_2.to_csv('../csv/scrap_match_up_team.csv', index=False, encoding='utf-8-sig')
+    df_1.to_csv(f'{csv_path}/scrap_match_up_main.csv', index=False, encoding='utf-8-sig')
+    df_2.to_csv(f'{csv_path}/scrap_match_up_team.csv', index=False, encoding='utf-8-sig')
+
+    return
 
     # print(df_1)
     # print(df_2)
-
-scrap_match_up()

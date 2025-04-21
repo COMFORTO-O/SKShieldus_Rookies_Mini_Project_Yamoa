@@ -2,16 +2,24 @@ import pandas as pd
 import os
 
 def dataset_matchup():
+
+    base_path = os.path.dirname(__file__)
+    csv_path = os.path.join(base_path, '..', 'csv')
+
     # CSV 파일 불러오기
     try:
-        df_main = pd.read_csv('../csv/scrap_match_up_main.csv')
+        csv_file = os.path.join(csv_path, 'scrap_match_up_main.csv')
+        df_main = pd.read_csv(csv_file)
     except FileNotFoundError:
         print("❌ CSV 파일을 찾을 수 없어요! 경로를 다시 확인해줘요!")
         exit()
+        
+
 
     # 야구장별 홈팀 추론용 매핑
     stadium_home_team_map = {
         "잠실": "두산",
+        "잠실": "LG",
         "문학": "SSG",
         "대구": "삼성",
         "고척": "키움",
@@ -21,7 +29,8 @@ def dataset_matchup():
         "광주": "KIA",
         "부산": "롯데",
         "청주": "한화",
-        "울산": "롯데"
+        "울산": "롯데",
+        "사직" : "롯데"
     }
 
     def save_game_by_row(row):
@@ -78,7 +87,9 @@ def dataset_matchup():
         }])
 
         csv_filename = f"new_games_{home['team'].upper()}.csv"
-        new_games.to_csv(csv_filename, index=False)
+        new_games.to_csv(os.path.join(csv_path, csv_filename), index=False, encoding='utf-8-sig')
+
+        # new_games.to_csv(csv_path, csv_filename, index=False)
         print(f"✅ [{home['team']}] 경기 저장 완료: {csv_filename}")
 
     # 모든 행에 대해 저장 수행
@@ -88,3 +99,4 @@ def dataset_matchup():
         for _, row in df_main.iterrows():
             save_game_by_row(row)
         print("🎉 모든 경기가 저장 완료되었어요!")
+        return

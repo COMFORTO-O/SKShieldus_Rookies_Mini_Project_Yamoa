@@ -2,6 +2,7 @@ import streamlit as st
 import sys
 import pandas as pd
 import json
+import os
 
 # 사용자 정의 경로 추가
 sys.path.append("../../py")

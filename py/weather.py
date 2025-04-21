@@ -1,13 +1,17 @@
-import httpx
-import ssl
-from bs4 import BeautifulSoup
-import pandas as pd
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-import seaborn as sns
+
 
 def weather_today(field_name):
+
+    import httpx
+    import ssl
+    from bs4 import BeautifulSoup
+    import pandas as pd
+    import matplotlib
+    import matplotlib.pyplot as plt
+    import matplotlib.font_manager as fm
+    import seaborn as sns
+
+
     field_list = [
         '27230510', #대구
         '48160720', #마산

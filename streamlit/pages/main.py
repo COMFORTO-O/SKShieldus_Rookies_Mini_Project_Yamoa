@@ -88,10 +88,6 @@ with st.container():
 
 
 
-
-
-
-
 # ------------ 선수 기록 섹션 ------------
 st.markdown("""
     <div class="blank"></div>

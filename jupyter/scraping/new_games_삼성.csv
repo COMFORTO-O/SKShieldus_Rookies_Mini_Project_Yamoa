@@ -1,2 +1,2 @@
-home_pitcher_era,away_pitcher_era,home_pitcher_war,away_pitcher_war,home_batting_avg,away_batting_avg
-5.27,2.45,0.02,0.6,0.26,0.28
+home_team,away_team,home_pitcher,away_pitcher,home_pitcher_era,away_pitcher_era,home_pitcher_war,away_pitcher_war,home_batting_avg,away_batting_avg
+삼성,롯데,이승현,데이비슨,5.27,2.45,0.02,0.6,0.26,0.28

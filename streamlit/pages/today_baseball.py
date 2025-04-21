@@ -6,10 +6,13 @@ import pandas as pd
 sys.path.append("../../py")
 sys.path.append("../components")
 
+from weather import weather_today
 from navbar import show
 
 # 네브바 보이기
 show()
+
+weather_today()
 
 # 페이지 제목 CSS
 st.markdown("""
@@ -45,3 +48,6 @@ st.markdown("""
 #    with st.container():
 #        fig = visualize_team_win_rate()  # 팀별 승수 시각화 함수 호출
 #        st.pyplot(fig)
+
+
+

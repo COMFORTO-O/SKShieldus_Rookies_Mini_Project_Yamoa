@@ -6,12 +6,13 @@ import os
 
 # 사용자 정의 경로 추가
 sys.path.append("../../py")
+sys.path.append("../../csv")
 sys.path.append("../jupyter/scraping")
 sys.path.append("../components")
 
 from navbar import show
 from plt_team_rank import visualize_team_win_rate
-from plt_teamrank import visualize_rank_trends
+from plt_teamrank import visualize_rank_trends, load_data_from_json
 from plt_player_record import plt_player_record
 
 
@@ -58,9 +59,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 # ------------ 팀별 승수 시각화 ------------
 with st.container():
-    with st.container():
-        fig = visualize_team_win_rate()  # 팀별 승수 시각화 함수 호출
-        st.pyplot(fig)
+    fig = visualize_team_win_rate()  # 팀별 승수 시각화 함수 호출
+    st.pyplot(fig)
 
 
 
@@ -68,23 +68,24 @@ with st.container():
 
 
 
-# # ------------ 팀별 순위 변화 제목 ------------
-# st.markdown("""
-#     <div class="blank"></div>
-#     <div>
-#         <div class="section-wrapper">
-#             <div class="section-title">팀별 순위 변화</div>
-#         </div>
-#     </div>
-# """, unsafe_allow_html=True)
-# # ------------ 팀별 순위 변화 시각화 ------------
-# with st.container():
-#     # JSON 데이터를 로드하여 DataFrame 생성
-#     df = load_data_from_json(json_file_path)  # 여기서 캐시된 데이터 사용
-    
-#     with st.container():
-#         fig_rank = visualize_rank_trends(df)  # 팀별 순위 변화 시각화 함수 호출 (df를 전달)
-#         st.pyplot(fig_rank)
+# ------------ 팀별 순위 변화 제목 ------------
+st.markdown("""
+    <div class="blank"></div>
+    <div>
+        <div class="section-wrapper">
+            <div class="section-title">팀별 순위 변화</div>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
+# ------------ 팀별 순위 변화 시각화 ------------
+# JSON 파일 불러오기 → DataFrame 변환
+with st.container():
+    with open("../../csv/scrap_teamrank.json", "r", encoding="utf-8") as f:
+        json_data = json.load(f)
+
+    df = load_data_from_json(json_data)
+    fig = visualize_rank_trends(df)
+    st.pyplot(fig)
 
 
 

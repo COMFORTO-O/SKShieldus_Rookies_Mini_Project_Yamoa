@@ -14,12 +14,6 @@ from plt_team_rank import visualize_team_win_rate
 from plt_teamrank import visualize_rank_trends
 from plt_player_record import plt_player_record
 
-json_file_path = os.path.join(os.path.dirname(__file__), '..', 'csv', 'scrap_teamrank.json')
-
-# # 파일 열기
-# with open(json_file_path, 'r', encoding='utf-8') as json_file:
-#     data = json.load(json_file)
-
 
 # Streamlit 설정을 가장 먼저 호출 - 그렇지 않으면 오류 발생생
 st.set_page_config(page_title="야모아", layout="wide")

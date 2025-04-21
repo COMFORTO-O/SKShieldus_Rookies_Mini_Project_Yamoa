@@ -7,38 +7,38 @@ import numpy as np
 def visualize_team_win_rate():
     font_path = 'C:\\windows\\Fonts\\malgun.ttf'
     font_prop = fm.FontProperties(fname=font_path).get_name()
-    print(font_prop)
     
     # rc(run command)
     matplotlib.rc('font', family=font_prop)
     
     df_team = pd.read_csv('../csv/scrap_team_rank.csv')
 
-    df_team = df_team.iloc[::-1].reset_index(drop=True)
+    # 승률 기준으로 오름차순 정렬
+    df_team = df_team.sort_values(by='승률', ascending=True)
 
-    plt.figure(figsize=(10, 7))
+    fig, ax = plt.subplots(figsize=(10, 7))  # 새로운 figure와 ax 객체 생성
 
-    y = range(len(df_team))
+    x = range(len(df_team))
     draw_rate = 1 - df_team['승률'] - df_team['패배율']
     df_team['무승부율'] = draw_rate
 
-    plt.bar(y, df_team['승률'], label='승률', color='pink')
-    plt.bar(y, df_team['무승부율'], bottom=df_team['승률'], label='무승부율', color='lightgray')
-    plt.bar(y, df_team['패배율'], bottom=df_team['승률'] + df_team['무승부율'], label='패배율', color='skyblue')
+    plt.bar(x, df_team['승률'], label='승률', color='pink')
+    plt.bar(x, df_team['무승부율'], bottom=df_team['승률'], label='무승부율', color='lightgray')
+    plt.bar(x, df_team['패배율'], bottom=df_team['승률'] + df_team['무승부율'], label='패배율', color='skyblue')
 
-    plt.yticks(y, df_team['팀명'])
+    plt.xticks(x, df_team['팀명'])
 
     # 값 표시
     for i, rate in enumerate(df_team['승률']):
         total = df_team.loc[i, ['승률', '무승부율', '패배율']].sum()
-        plt.text(i, total - 0.53, f'{rate:.3f}%', ha='center', fontsize=10, color='black')
+        plt.text(i, total - 0.5, f'{rate:.3f}%', ha='center', fontsize=10, color='black')
 
     # plot 특징 수정
     plt.legend(loc='upper right')
     plt.ylim(0, 1.0)
     # plt.yticks(np.arange(0, 28, 3))
-    plt.xlabel('비율율')
-    plt.ylabel('팀명')
+    plt.xlabel('팀명')
+    plt.ylabel('승률')
     plt.title('KBO 팀 누적 승률/순위')
     plt.show()
 

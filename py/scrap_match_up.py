@@ -4,12 +4,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import pandas as pd
+import os
 
 def scrap_match_up():
 
     # Selenium 드라이버 실행
     driver = webdriver.Chrome()
     driver.get("https://www.koreabaseball.com/Schedule/GameCenter/Main.aspx#none;")
+
+    base_path = os.path.dirname(__file__)
+    csv_path = os.path.join(base_path, '..', 'csv')
 
     # 페이지 로드 대기
     WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "section")))
@@ -175,7 +179,22 @@ def scrap_match_up():
 
             time.sleep(0.5)
 
-
+            # 야구장별 홈팀 추론용 매핑
+            stadium_home_team_map = {
+                "잠실": "두산",
+                "잠실": "LG",
+                "문학": "SSG",
+                "대구": "삼성",
+                "고척": "키움",
+                "대전(신)": "한화",
+                "창원": "NC",
+                "수원": "KT",
+                "광주": "KIA",
+                "부산": "롯데",
+                "청주": "한화",
+                "울산": "롯데",
+                "사직" : "롯데"
+            }
 
             # 결과 저장 1
             results_1.append({
@@ -187,17 +206,45 @@ def scrap_match_up():
                 "선발투수1 AVG": td1,
                 "선발투수1 WAR": td2,
                 "팀 AVG 1" : team_avg1,
-                "팀 BA 1" : team_avg2,
+                "팀 BA 1" : team_ba1,
 
                 "팀명2" : team_name2,
-                "팀 AVG 1" : team_avg1,
-                "팀 BA 1" : team_ba1,
                 "선발투수2": pitcher_2,
                 "선발투수2 AVG": td3,
                 "선발투수2 WAR": td4,
                 "팀 AVG 2" : team_avg2,
-                "팀 BA 2" : team_ba2,
+                "팀 BA 2" : team_ba2
             })
+
+            for result_1_dict in results_1:
+                stadium = result_1_dict['야구장']
+                print(stadium)
+                home_team = stadium_home_team_map.get(stadium)
+
+                # 홈팀 / 원정팀 정리
+                if result_1_dict['팀명1'] == home_team:
+                    print("홈팀")
+                else:
+
+                    switched_data = {
+                        "경기시간": match_time,
+                        "야구장": stadium,
+
+                        "팀명1": result_1_dict["팀명2"],  # 팀2 값을 팀1으로
+                        "선발투수1": result_1_dict["선발투수2"],
+                        "선발투수1 AVG": result_1_dict["선발투수2 AVG"],
+                        "선발투수1 WAR": result_1_dict["선발투수2 WAR"],
+                        "팀 AVG 1": result_1_dict["팀 AVG 2"],
+                        "팀 BA 1": result_1_dict["팀 BA 2"],
+                        
+                        "팀명2": result_1_dict["팀명1"],  # 팀1 값을 팀2로
+                        "선발투수2": result_1_dict["선발투수1"],
+                        "선발투수2 AVG": result_1_dict["선발투수1 AVG"],
+                        "선발투수2 WAR": result_1_dict["선발투수1 WAR"],
+                        "팀 AVG 2": result_1_dict["팀 AVG 1"],
+                        "팀 BA 2": result_1_dict["팀 BA 1"]
+                    }
+                    result_1_dict.update(switched_data)  # 업데이트된 데이터로 교체
 
 
             
@@ -217,7 +264,7 @@ def scrap_match_up():
                 "팀2의 하위타선" : war_statistics_lower_lineup_2,
                 "팀2의 포지션": position_1,
                 "팀2의 선수명": player_2,
-                "팀2의 WAR": war_2,
+                "팀2의 WAR": war_2
             })
 
 
@@ -231,8 +278,11 @@ def scrap_match_up():
     # 드라이버 종료
     driver.quit()
 
-    df_1.to_csv('./csv/scrap_match_up_main.csv', index=False, encoding='utf-8-sig')
-    df_2.to_csv('./csv/scrap_match_up_team.csv', index=False, encoding='utf-8-sig')
+    df_1.to_csv(f'{csv_path}/scrap_match_up_main.csv', index=False, encoding='utf-8-sig')
+    df_2.to_csv(f'{csv_path}/scrap_match_up_team.csv', index=False, encoding='utf-8-sig')
 
-    print(df_1)
-    print(df_2)
+    return
+
+
+
+# scrap_match_up()

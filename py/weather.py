@@ -209,14 +209,10 @@ def weather_today(field_name):
         ax1.grid(False)
         ax2.grid(False)
 
-    # 레이아웃 조정 및 출력
+    # 레이아웃 조정
     plt.tight_layout()
-    plt.show()
 
-    # 레이아웃 조정 및 출력
-    plt.tight_layout()
-    plt.show()
-
-
+    # fig 반환
+    return fig
 
 weather_today('대구야구장')

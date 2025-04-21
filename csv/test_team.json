@@ -1,0 +1,62 @@
+[
+    {
+    "name": "SSG 랜더스",
+    "description": "감독 : 이숭용  주장 : 김광현",
+    "characteristics": "창단연도 : 2021년  연고지역 : 인천광역시",
+    "image": "../jpg/SSG.jpg"
+  },
+  {
+    "name": "키움 히어로즈",
+    "description": "감독 : 홍원기  주장 : 송성문",
+    "characteristics": "창단연도 : 2008년  연고지역 : 서울특별시",
+    "image": "../jpg/키움.jpg"
+  },
+  {
+    "name": "LG 트윈스",
+    "description": "감독 : 염경엽  주장 : 박해민",
+    "characteristics": "창단연도 : 1990년  연고지역 : 서울특별시",
+    "image": "../jpg/LG.jpg"
+  },
+  {
+    "name": "KT 위즈",
+    "description": "감독 : 이강철  주장 : 장성우",
+    "characteristics": "창단연도 : 2013년  연고지역 : 수원시",
+    "image": "../jpg/KT.jpg"
+  },
+  {
+    "name": "NC 다이노스",
+    "description": "감독 : 이호준  주장 : 박민우",
+    "characteristics": "창단연도 : 2011년  연고지역 : 창원시",
+    "image": "../jpg/NC.jpg"
+  },
+  {
+    "name": "두산 베어스",
+    "description": "감독 : 이승엽  주장 : 양의지",
+    "characteristics": "창단연도 : 1982년  연고지역 : 서울특별시",
+    "image": "../jpg/두산.jpeg"
+  },
+  {
+    "name": "KIA 타이거즈",
+    "description": "감독 : 이범호  주장 : 나성범",
+    "characteristics": "창단연도 : 2001년  연고지역 : 광주광역시",
+    "image": "../jpg/kia.jpg"
+  },
+  {
+    "name": "삼성 라이온즈",
+    "description": "감독 : 박진만  주장 : 구자욱",
+    "characteristics": "창단연도 : 1982년  연고지역 : 대구광역시",
+    "image": "../jpg/삼성.jpg"
+  },
+  {
+    "name": "롯데 자이언츠",
+    "description": "감독 : 김태형  주장 : 전준우",
+    "characteristics": "창단연도 : 1982년  연고지역 : 부산광역시",
+    "image": "../jpg/롯데.jpg"
+  },
+  {
+    "name": "한화 이글스",
+    "description": "감독 : 김경문  주장 : 채은성",
+    "characteristics": "창단연도 : 1986  연고지역 : 대전광역시",
+    "image": "../jpg/한화.png"
+  }
+]

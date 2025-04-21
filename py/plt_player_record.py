@@ -1,15 +1,20 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import os
 
 def plt_player_record():
     # 폰트 설정
     plt.rc('font', family='Malgun Gothic')  # 폰트 설정
     plt.rcParams['axes.unicode_minus'] = False
 
+    base_path = os.path.dirname(__file__)
+    csv_path1 = os.path.join(base_path, '..', 'csv', 'scrap_batter_record.csv')
+    csv_path2 = os.path.join(base_path, '..', 'csv', 'scrap_bowler_record.csv')
+
     # CSV 파일 불러오기
-    batter_record_df = pd.read_csv(r'C:\Users\user\Desktop\yamoa_project\csv\scrap_batter_record.csv', encoding='utf-8').head(15)
-    bowler_record_df = pd.read_csv(r'C:\Users\user\Desktop\yamoa_project\csv\scrap_bowler_record.csv', encoding='utf-8').head(15)
+    batter_record_df = pd.read_csv(csv_path1, encoding='utf-8').head(15)
+    bowler_record_df = pd.read_csv(csv_path2, encoding='utf-8').head(15)
 
     # 타자 그래프
     fig, ax = plt.subplots(figsize=(10, 6))  # figure와 ax 객체 생성

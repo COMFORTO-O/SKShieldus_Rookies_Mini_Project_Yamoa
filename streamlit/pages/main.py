@@ -5,7 +5,6 @@ import json
 
 # 사용자 정의 경로 추가
 sys.path.append("../../py")
-sys.path.append("../jupyter/scraping")
 sys.path.append("../components")
 
 from navbar import show
@@ -13,12 +12,39 @@ from plt_team_rank import visualize_team_win_rate
 from plt_teamrank import visualize_rank_trends
 from plt_player_record import plt_player_record
 
-
 # Streamlit 설정을 가장 먼저 호출 - 그렇지 않으면 오류 발생생
 st.set_page_config(page_title="야모아", layout="wide")
 
 # 네비게이션 바
 show()
+
+
+# JSON 파일 경로
+json_file_path = r"C:\Users\user\Desktop\yamoa_project\csv\scrap_teamrank.json"
+
+# JSON 파일 로드 함수
+@st.cache_data
+def load_data_from_json(json_file_path):
+    with open(json_file_path, 'r', encoding='utf-8') as json_file:
+        json_data = json.load(json_file)
+    
+    # JSON 데이터를 DataFrame으로 변환
+    all_data = []
+    for team, records in json_data.items():
+        for record in records:
+            record["team"] = team  # 팀 이름 추가
+            all_data.append(record)
+    
+    # DataFrame 생성
+    df = pd.DataFrame(all_data)
+    
+    # 날짜 변환 및 내림차순 정렬 (최근 -> 과거)
+    df['date'] = pd.to_datetime(df['date'], format='%Y.%m.%d')  # 날짜 형식 변환
+    df = df.sort_values(by=["date", "rank"], ascending=[False, True]).reset_index(drop=True)  # 내림차순으로 날짜 정렬
+    
+    return df
+
+
 
 
 # 페이지 제목 및 섹션 간 여백 CSS
@@ -67,23 +93,23 @@ with st.container():
 
 
 
-# # ------------ 팀별 순위 변화 제목 ------------
-# st.markdown("""
-#     <div class="blank"></div>
-#     <div>
-#         <div class="section-wrapper">
-#             <div class="section-title">팀별 순위 변화</div>
-#         </div>
-#     </div>
-# """, unsafe_allow_html=True)
-# # ------------ 팀별 순위 변화 시각화 ------------
-# with st.container():
-#     # JSON 데이터를 로드하여 DataFrame 생성
-#     df = load_data_from_json(json_file_path)  # 여기서 캐시된 데이터 사용
+# ------------ 팀별 순위 변화 제목 ------------
+st.markdown("""
+    <div class="blank"></div>
+    <div>
+        <div class="section-wrapper">
+            <div class="section-title">팀별 순위 변화</div>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
+# ------------ 팀별 순위 변화 시각화 ------------
+with st.container():
+    # JSON 데이터를 로드하여 DataFrame 생성
+    df = load_data_from_json(json_file_path)  # 여기서 캐시된 데이터 사용
     
-#     with st.container():
-#         fig_rank = visualize_rank_trends(df)  # 팀별 순위 변화 시각화 함수 호출 (df를 전달)
-#         st.pyplot(fig_rank)
+    with st.container():
+        fig_rank = visualize_rank_trends(df)  # 팀별 순위 변화 시각화 함수 호출 (df를 전달)
+        st.pyplot(fig_rank)
 
 
 

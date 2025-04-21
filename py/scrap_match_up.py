@@ -210,36 +210,35 @@ def scrap_match_up():
                 "팀 BA 2" : team_ba2
             })
 
-            result_1_list = results_1[0]
-            stadium = result_1_list['야구장']
-            print(stadium)
-            home_team = stadium_home_team_map.get(stadium)
+            for result_1_dict in results_1:
+                stadium = result_1_dict['야구장']
+                print(stadium)
+                home_team = stadium_home_team_map.get(stadium)
 
-            # 홈팀 / 원정팀 정리
-            if result_1_list['팀명1'] == home_team:
-                print("홈팀")
-            else:
-                print("홈팀 아님")
+                # 홈팀 / 원정팀 정리
+                if result_1_dict['팀명1'] == home_team:
+                    print("홈팀")
+                else:
 
-                switched_data = {
-                    "경기시간": match_time,
-                    "야구장": stadium,
+                    switched_data = {
+                        "경기시간": match_time,
+                        "야구장": stadium,
 
-                    "팀명1": results_1["팀명2"],  # 팀2 값을 팀1으로
-                    "선발투수1": results_1["선발투수2"],
-                    "선발투수1 AVG": results_1["선발투수2 AVG"],
-                    "선발투수1 WAR": results_1["선발투수2 WAR"],
-                    "팀 AVG 1": results_1["팀 AVG 2"],
-                    "팀 BA 1": results_1["팀 BA 2"],
-                    
-                    "팀명2": results_1["팀명1"],  # 팀1 값을 팀2로
-                    "선발투수2": results_1["선발투수1"],
-                    "선발투수2 AVG": results_1["선발투수1 AVG"],
-                    "선발투수2 WAR": results_1["선발투수1 WAR"],
-                    "팀 AVG 2": results_1["팀 AVG 1"],
-                    "팀 BA 2": results_1["팀 BA 1"]
-                }
-                results_1.update(switched_data)  # 업데이트된 데이터로 교체
+                        "팀명1": result_1_dict["팀명2"],  # 팀2 값을 팀1으로
+                        "선발투수1": result_1_dict["선발투수2"],
+                        "선발투수1 AVG": result_1_dict["선발투수2 AVG"],
+                        "선발투수1 WAR": result_1_dict["선발투수2 WAR"],
+                        "팀 AVG 1": result_1_dict["팀 AVG 2"],
+                        "팀 BA 1": result_1_dict["팀 BA 2"],
+                        
+                        "팀명2": result_1_dict["팀명1"],  # 팀1 값을 팀2로
+                        "선발투수2": result_1_dict["선발투수1"],
+                        "선발투수2 AVG": result_1_dict["선발투수1 AVG"],
+                        "선발투수2 WAR": result_1_dict["선발투수1 WAR"],
+                        "팀 AVG 2": result_1_dict["팀 AVG 1"],
+                        "팀 BA 2": result_1_dict["팀 BA 1"]
+                    }
+                    result_1_dict.update(switched_data)  # 업데이트된 데이터로 교체
 
 
             

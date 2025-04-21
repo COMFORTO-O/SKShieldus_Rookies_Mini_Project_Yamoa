@@ -8,14 +8,11 @@ import os
 sys.path.append("../../py")
 sys.path.append("../components")
 
-from weather import weather_today
 from navbar import show
 from scrap_news import get_news, get_sections
 
 # 네브바 보이기
 show()
-
-weather_today()
 
 # 페이지 제목 CSS
 st.markdown("""
@@ -47,7 +44,26 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 # ------------시각화 ------------
-#with st.container():
-#    with st.container():
-#        fig = visualize_team_win_rate()  # 팀별 승수 시각화 함수 호출
-#        st.pyplot(fig)
+categories = get_sections()
+st.markdown("## 💡 보고 싶은 뉴스 카테고리를 골라보세요!")
+selected_category = None
+cols = st.columns(len(categories))
+for i, category in enumerate(categories):
+    if cols[i].button(category):
+        selected_category = category
+if selected_category:
+    news_list = get_news(selected_category)
+    st.markdown(f"### {selected_category}")
+
+    for news in news_list:
+        st.markdown(f"#### 🔗 [{news['title']}]({news['link']})")
+        if 'img' in news:
+            st.image(news['img'], use_column_width=True)
+else:
+    news_list = get_news('최신뉴스')
+    st.markdown(f"### 최신뉴스")
+    
+    for news in news_list:
+        if 'img' in news:
+            st.image(news['img'], use_column_width=True)
+        st.markdown(f"#### [{news['title']}]({news['link']})")

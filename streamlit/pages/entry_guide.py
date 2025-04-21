@@ -3,14 +3,18 @@ import sys
 import pandas as pd
 import sys
 import os
+import json
+from collections import defaultdict
 
 # 사용자 정의 경로 추가
 sys.path.append("../../py")
 sys.path.append("../components")
+sys.path.append("../csv")
 
 from navbar import show
 from scrap_news import get_news, get_sections
 from scrap_team_info import scrap_team_info
+from KBOteamTest import render_question, get_questions, get_teams
 
 # 네브바 보이기
 show()
@@ -36,6 +40,135 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# ------------ 테스트 ------------
+st.markdown("""
+    <div>
+        <div class="section-wrapper">
+            <div class="section-title">야구 심리테스트</div>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
+# ------------시각화 ------------
+if 'current_question' not in st.session_state:
+    st.markdown("""
+    <style>
+    .title {
+        font-size: 25px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .subtitle {
+        font-size: 35px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .subsubtitle {
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown('<h1 class="title">⚾ 야모아</h1>', unsafe_allow_html=True)
+    st.markdown('<h2 class="subtitle">나에게 어울리는 KBO 팀은?</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="subsubtitle">20가지 질문으로 알아보는 나의 최애 야구팀 찾기</h2>', unsafe_allow_html=True)
+    st.markdown("---")
+    
+    col1, col2, col3 = st.columns([1,2,1])
+    with col2:
+        if st.button("테스트 시작하기", type="primary", use_container_width=True):
+            st.session_state.current_question = 0
+            st.session_state.team_scores = defaultdict(int)
+            st.session_state.submitted = False
+            st.rerun()
+    st.markdown("---")
+    st.stop()
+    
+questions = get_questions()
+teams = get_teams()
+if not st.session_state.submitted:
+    if st.session_state.current_question < len(questions):
+        render_question(questions)
+    else:
+        st.session_state.submitted = True
+        st.rerun()
+else:
+    # 결과 화면
+    if st.session_state.team_scores:
+        max_score = max(st.session_state.team_scores.values())
+        best_teams = [team for team, score in st.session_state.team_scores.items() if score == max_score]
+        
+        st.markdown("""
+        <style>
+        
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .result-title {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .team-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .team-description {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .retry-btn {
+            margin-top: 20px;
+        }
+        
+        """, unsafe_allow_html=True)
+        
+        st.markdown('<div class="result-container">', unsafe_allow_html=True)
+        st.markdown('<div class="result-title">당신과 가장 잘 맞는 구단은...</div>', unsafe_allow_html=True)
+        
+        for team_name in best_teams:
+            team_info = next((team for team in teams if team["name"] == team_name), None)
+            if team_info:
+                st.image(team_info["image"])
+                st.markdown(f'<div class="team-name">{team_info["name"]}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="team-description">{team_info["description"]}</div>', unsafe_allow_html=True)
+                # Save the best team(s) to a file for use in another script
+                with open("best_team.json", "w", encoding="utf-8") as f:
+                    json.dump({"best_teams": best_teams}, f, ensure_ascii=False, indent=4)
+        st.markdown('</div>', unsafe_allow_html=True)
+       
+
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            if st.button("테스트 다시하기", key="retry_start", use_container_width=True):
+                st.session_state.clear()
+                st.session_state.current_question = 0
+                st.session_state.team_scores = defaultdict(int)
+                st.session_state.submitted = False
+                st.rerun()
+                
+                
+    else:
+        st.warning("답변이 없습니다. 테스트를 다시 시작해주세요.")
+        if st.button("테스트 다시하기", key="retry_start", use_container_width=True):
+            st.session_state.clear()
+            st.session_state.current_question = 0
+            st.session_state.team_scores = defaultdict(int)
+            st.session_state.submitted = False
+            st.rerun()
+            # Save the best team(s) to a file for use in another script
+            with open("best_team.json", "w", encoding="utf-8") as f:
+                json.dump({"best_teams": best_teams}, f, ensure_ascii=False, indent=4)
+    
 # ------------ 뉴스 ------------
 st.markdown("""
     <div>

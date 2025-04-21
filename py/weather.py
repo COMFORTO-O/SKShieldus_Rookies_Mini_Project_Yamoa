@@ -119,7 +119,7 @@ def weather_today(field_name):
             rainProb_list.append(hour['rainProb'])
 
     areas_weather_df = pd.DataFrame(areas_list)
-    areas_weather_df.to_csv('scrap_weather_today.csv', index=False, encoding='utf-8-sig')
+    areas_weather_df.to_csv('../csv/scrap_weather_today.csv', index=False, encoding='utf-8-sig')
 
     # 한글 폰트 설정
     font_path = 'C:\\windows\\Fonts\\malgun.ttf'

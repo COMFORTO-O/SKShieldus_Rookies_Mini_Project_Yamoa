@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import seaborn as sns
 
-def weather_today():
+def weather_today(field_name):
     field_list = [
         '27230510', #대구
         '48160720', #마산
@@ -136,8 +136,7 @@ def weather_today():
     }
 
     stadium_list = {k: int(v) for k, v in stadium_list.items()}
-    input_stadium = '잠실야구장'  # 대구야구장
-    areaCode = stadium_list[input_stadium]
+    areaCode = stadium_list[field_name]
     # CSV 불러오기
     areas_weather_today_df = pd.read_csv('scrap_weather_today.csv')
     area_weather_today_df = areas_weather_today_df[areas_weather_today_df['areaCode'] == areaCode] # 특정 야구장 날씨만 가져오기
@@ -164,9 +163,16 @@ def weather_today():
     # 그래프 생성
     fig, ax1 = plt.subplots(figsize=(10, 6))
 
+    filtered_df_plot = df_plot[(df_plot['시간'] >= 14) & (df_plot['시간'] <= 22)]
+
     # 강수 확률 막대 그래프
-    bars = sns.barplot(data=df_plot, x='시간', y='강수 확률', color='skyblue', ax=ax1)
-    ax1.set_ylabel('강수 확률', color='skyblue')
+    bars = sns.barplot(data=filtered_df_plot, x='시간', y='강수 확률', color='skyblue', ax=ax1)
+    # Update x-axis labels to include '시' and remove the x-axis title
+    ax1.set_xlabel('')
+    ax1.set_xticks(range(len(filtered_df_plot['시간'])))
+    ax1.set_xticklabels([f"{hour}시" for hour in filtered_df_plot['시간']])
+
+    ax1.set_ylabel('강수 확률 (%)', color='skyblue')
     ax1.set_ylim(0, 100)
     ax1.tick_params(axis='y', labelcolor='skyblue')
 
@@ -179,18 +185,20 @@ def weather_today():
     ax2 = ax1.twinx()
 
     # Adjust x-axis alignment for the line plot
-    ax2.plot(range(len(df_plot['시간'])), df_plot['기온'], marker='o', color='red', label='기온', linewidth=2)
+    ax2.plot(range(len(filtered_df_plot['시간'])), filtered_df_plot['기온'], marker='o', color='red', label='기온', linewidth=2)
 
     # Update text annotations for the adjusted x-axis
-    for i, val in enumerate(df_plot['기온']):
+    for i, val in enumerate(filtered_df_plot['기온']):
         ax2.text(i, val + 0.8, f'{val:.0f}', ha='center', va='bottom', fontsize=10, color='red')
 
-    ax2.set_ylabel('기온', color='red')
+    ax2.set_ylabel('기온 (°C)', color='red')
     ax2.tick_params(axis='y', labelcolor='red')
     ax2.set_ylim(0, 35)
 
+    
+
     # 제목
-    plt.title(f'{input_stadium} 오늘의 날씨')
+    plt.title(f'{field_name} 오늘의 날씨')
 
     # axes 선 제거 (양쪽)
     for spine in ['top', 'right', 'left', 'bottom']:
@@ -201,6 +209,10 @@ def weather_today():
     plt.tight_layout()
     plt.show()
 
+    # 레이아웃 조정 및 출력
+    plt.tight_layout()
+    plt.show()
 
 
-weather_today()
+
+weather_today('대구야구장')
